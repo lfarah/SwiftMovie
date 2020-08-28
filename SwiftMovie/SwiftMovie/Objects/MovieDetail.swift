@@ -13,6 +13,8 @@ struct MovieDetail: Codable {
     let imageURLPath: String
     let releaseDateStr: String
     let genreIds: [Int]?
+    let likesCount: Int
+    let viewsCount: Double
 
     var imageURL: URL? {
         let urlStr = "https://image.tmdb.org/t/p/w500\(imageURLPath)"
@@ -35,5 +37,7 @@ struct MovieDetail: Codable {
         case imageURLPath = "poster_path"
         case releaseDateStr = "release_date"
         case genreIds = "genre_ids"
+        case likesCount = "vote_count"
+        case viewsCount = "popularity"
     }
 }

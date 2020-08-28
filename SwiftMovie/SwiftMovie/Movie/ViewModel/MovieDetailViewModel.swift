@@ -15,7 +15,7 @@ struct MovieDetailViewModel {
     let bag = DisposeBag()
     
     enum Section {
-        case mainMovie(title: String, imageURL: URL?)
+        case mainMovie(title: String, imageURL: URL?, likesCount: Int, viewsCount: Double)
         case similarMovie(title: String, imageURL: URL?, year: String?, genres: [String])
     }
     
@@ -32,7 +32,10 @@ struct MovieDetailViewModel {
             .filterNotNil()
             .map { info -> [Section] in
                 var sections: [Section] = []
-                let mainMovieSection = Section.mainMovie(title: info.detail.title, imageURL: info.detail.imageURL)
+                let mainMovieSection = Section.mainMovie(title: info.detail.title,
+                                                         imageURL: info.detail.imageURL,
+                                                         likesCount: info.detail.likesCount,
+                                                         viewsCount: info.detail.viewsCount)
                 sections += [mainMovieSection]
                 
                 sections += info.similarMovies.map({ (movie) -> Section in

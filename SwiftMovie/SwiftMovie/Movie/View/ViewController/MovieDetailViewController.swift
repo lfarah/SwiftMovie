@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 class MovieDetailViewController: UIViewController {
     
@@ -17,7 +18,7 @@ class MovieDetailViewController: UIViewController {
     let tableView: UITableView = {
         let view = UITableView()
         view.translatesAutoresizingMaskIntoConstraints = false
-
+        view.backgroundColor = #colorLiteral(red: 0.05098039216, green: 0.05098039216, blue: 0.05098039216, alpha: 1)
         return view
     }()
     
@@ -65,8 +66,8 @@ extension MovieDetailViewController: UITableViewDataSource, UITableViewDelegate 
         
         switch viewModel.dataSource.value[indexPath.row] {
             
-        case .mainMovie(let title, let imageURL):
-            return configureMainMovieCell(title: title, imageURL: imageURL, indexPath: indexPath)
+        case .mainMovie(let title, let imageURL, let likesCount, let viewsCount):
+            return configureMainMovieCell(title: title, imageURL: imageURL, likesCount: likesCount, viewsCount: viewsCount, indexPath: indexPath)
         case .similarMovie(let title, let imageURL, let releaseYear, let genres):
             return configureSimilarMovieCell(title: title, imageURL: imageURL, releaseYear: releaseYear, genres: genres, indexPath: indexPath)
         }
@@ -84,10 +85,19 @@ extension MovieDetailViewController: UITableViewDataSource, UITableViewDelegate 
 }
 
 extension MovieDetailViewController {
-    func configureMainMovieCell(title: String, imageURL: URL?, indexPath: IndexPath) -> UITableViewCell {
+    func configureMainMovieCell(title: String, imageURL: URL?, likesCount: Int, viewsCount: Double, indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueResuableCell(type: MainMovieCell.self, indexPath: indexPath)
         cell.title = title
         cell.imageURL = imageURL
+        cell.likesCount = likesCount
+        cell.viewsCount = viewsCount
+
+        let disposable = cell.likeButton.rx.tap
+            .subscribe(onNext: { _ in
+                cell.isLiked.toggle()
+                cell.likesCount = cell.isLiked ? likesCount + 1 : likesCount
+            })
+        cell.registerButtonEvent(disposable: disposable)
         return cell
     }
     

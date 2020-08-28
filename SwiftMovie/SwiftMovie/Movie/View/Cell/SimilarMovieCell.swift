@@ -81,7 +81,7 @@ class SimilarMovieCell: UITableViewCell {
     
     var category: String = "" {
         didSet {
-            categoryLabel.text = category ?? "Drama, asfd"
+            categoryLabel.text = category
         }
     }
 
