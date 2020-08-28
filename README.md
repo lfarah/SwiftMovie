@@ -1,8 +1,11 @@
 # SwiftMovie
 Um app que mostra informações do filme Taylor Swift: The 1989 World Tour - Live
 
-
 <img width="300" alt="Screen Shot 2020-08-28 at 1 19 34 AM" src="https://user-images.githubusercontent.com/6511079/91520861-be2fd680-e8cc-11ea-911c-d5da16106ffb.png">
+
+Horário de inicio: 21:06
+
+Horário de término: 1:26
 
 ### Explicação geral do código
 Arquitetura: MVVM
