@@ -4,9 +4,9 @@ disabled_rules: # rule identifiers turned on by default to exclude from running
   - line_length
 
 custom_rules:
-  api_outside_repository: # rule identifier
+  networker_outside_repository: # rule identifier
     included: "SwiftMovie/.*\\.swift" # regex that defines paths to include during linting optional.
-    excluded: "(.*Repository\\.swift)||(Networker.swift)" # regex that defines paths to exclude during linting. optional
+    excluded: "(.*Repository\\.swift)|(Networker.swift)" # regex that defines paths to exclude during linting. optional
     name: "Networker Outside Repository" # rule name. optional.
     regex: 'Networker'
     capture_group: 0
