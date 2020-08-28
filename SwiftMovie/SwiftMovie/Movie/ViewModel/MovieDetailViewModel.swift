@@ -14,10 +14,32 @@ struct MovieDetailViewModel {
     let repository = MovieRepository()
     let bag = DisposeBag()
     
-    let dataSource = BehaviorRelay<(detail: MovieDetail, similarMovies: [MovieDetail])?>(value: nil)
+    enum Section {
+        case mainMovie(title: String)
+    }
     
+    let dataSource = BehaviorRelay<[Section]>(value: [])
+    
+    let movieInfo = BehaviorRelay<(detail: MovieDetail, similarMovies: [MovieDetail])?>(value: nil)
+
     init() {
         requestMovieInfo()
+            .bind(to: movieInfo)
+            .disposed(by: bag)
+        
+        movieInfo
+            .filterNotNil()
+            .map { info -> [Section] in
+                var sections: [Section] = []
+                let mainMovieSection = Section.mainMovie(title: info.detail.title)
+                sections += [mainMovieSection]
+                
+                sections += info.similarMovies.map({ (movie) -> Section in
+                    return .mainMovie(title: movie.title)
+                })
+                
+                return sections
+            }
             .bind(to: dataSource)
             .disposed(by: bag)
     }

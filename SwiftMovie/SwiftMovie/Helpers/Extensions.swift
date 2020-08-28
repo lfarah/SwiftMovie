@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import RxSwift
 import RxCocoa
 
@@ -39,5 +40,26 @@ extension BehaviorRelay where Element: OptionalType {
         return flatMap { value in
             value.optional.map { Observable<Element.Wrapped>.just($0) } ?? Observable<Element.Wrapped>.empty()
         }
+    }
+}
+
+public protocol ReusableView: class { }
+
+extension UITableViewCell {
+    public static var reuseIdentifier: String {
+        return String(describing: self)
+    }
+}
+
+extension UITableView {
+    public func register<T: UITableViewCell>(cellClass: T.Type) {
+        register(cellClass, forCellReuseIdentifier: T.reuseIdentifier)
+    }
+        
+    public func dequeueResuableCell<T: UITableViewCell>(type: T.Type, indexPath: IndexPath) -> T {
+        guard let cell = dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
+            fatalError(" Could not dequeue cell with identifier: \(T.reuseIdentifier)")
+        }
+        return cell
     }
 }
