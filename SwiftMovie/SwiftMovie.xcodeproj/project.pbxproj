@@ -24,6 +24,8 @@
 		C29746DE24F88BAD008FCCB0 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = C29746DD24F88BAD008FCCB0 /* RxCocoa */; };
 		C29746E024F88E29008FCCB0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29746DF24F88E29008FCCB0 /* Extensions.swift */; };
 		C29746E324F89542008FCCB0 /* MainMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29746E224F89542008FCCB0 /* MainMovieCell.swift */; };
+		C29746E824F89871008FCCB0 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C29746E724F89871008FCCB0 /* Kingfisher */; };
+		C29746EA24F89B6E008FCCB0 /* SimilarMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29746E924F89B6E008FCCB0 /* SimilarMovieCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,7 @@
 		C29746D724F88AC7008FCCB0 /* MovieRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRepository.swift; sourceTree = "<group>"; };
 		C29746DF24F88E29008FCCB0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C29746E224F89542008FCCB0 /* MainMovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMovieCell.swift; sourceTree = "<group>"; };
+		C29746E924F89B6E008FCCB0 /* SimilarMovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarMovieCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C29746E824F89871008FCCB0 /* Kingfisher in Frameworks */,
 				C29746DE24F88BAD008FCCB0 /* RxCocoa in Frameworks */,
 				C29746DC24F88BAD008FCCB0 /* RxSwift in Frameworks */,
 				C29746CB24F88651008FCCB0 /* Alamofire in Frameworks */,
@@ -204,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				C29746E224F89542008FCCB0 /* MainMovieCell.swift */,
+				C29746E924F89B6E008FCCB0 /* SimilarMovieCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -237,6 +242,7 @@
 				C29746CA24F88651008FCCB0 /* Alamofire */,
 				C29746DB24F88BAD008FCCB0 /* RxSwift */,
 				C29746DD24F88BAD008FCCB0 /* RxCocoa */,
+				C29746E724F89871008FCCB0 /* Kingfisher */,
 			);
 			productName = SwiftMovie;
 			productReference = C297469424F882C2008FCCB0 /* SwiftMovie.app */;
@@ -313,6 +319,7 @@
 			packageReferences = (
 				C29746C924F88651008FCCB0 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				C29746DA24F88BAD008FCCB0 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				C29746E624F89871008FCCB0 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = C297469524F882C2008FCCB0 /* Products */;
 			projectDirPath = "";
@@ -377,6 +384,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C29746EA24F89B6E008FCCB0 /* SimilarMovieCell.swift in Sources */,
 				C29746D824F88AC7008FCCB0 /* MovieRepository.swift in Sources */,
 				C29746E024F88E29008FCCB0 /* Extensions.swift in Sources */,
 				C297469C24F882C2008FCCB0 /* MovieDetailViewController.swift in Sources */,
@@ -719,6 +727,14 @@
 				minimumVersion = 5.1.1;
 			};
 		};
+		C29746E624F89871008FCCB0 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.15.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -736,6 +752,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C29746DA24F88BAD008FCCB0 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxCocoa;
+		};
+		C29746E724F89871008FCCB0 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C29746E624F89871008FCCB0 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

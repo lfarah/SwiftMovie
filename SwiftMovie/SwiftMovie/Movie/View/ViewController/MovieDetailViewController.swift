@@ -17,6 +17,7 @@ class MovieDetailViewController: UIViewController {
     let tableView: UITableView = {
         let view = UITableView()
         view.translatesAutoresizingMaskIntoConstraints = false
+
         return view
     }()
     
@@ -31,7 +32,7 @@ class MovieDetailViewController: UIViewController {
 
 extension MovieDetailViewController {
     func layout() {
-        view.backgroundColor = .white
+        view.backgroundColor = #colorLiteral(red: 0.05098039216, green: 0.05098039216, blue: 0.05098039216, alpha: 1)
         
         view.addSubview(tableView)
         tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
@@ -42,8 +43,11 @@ extension MovieDetailViewController {
     
     func bind() {
         tableView.dataSource = self
+        tableView.delegate = self
+
         tableView.register(cellClass: MainMovieCell.self)
-        
+        tableView.register(cellClass: SimilarMovieCell.self)
+
         viewModel.dataSource
             .subscribe(onNext: { [weak self] _ in
                 self?.tableView.reloadData()
@@ -52,7 +56,7 @@ extension MovieDetailViewController {
     }
 }
 
-extension MovieDetailViewController: UITableViewDataSource {
+extension MovieDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.dataSource.value.count
     }
@@ -61,17 +65,38 @@ extension MovieDetailViewController: UITableViewDataSource {
         
         switch viewModel.dataSource.value[indexPath.row] {
             
-        case .mainMovie(let title):
-            return configureMainMovieCell(title: title, indexPath: indexPath)
+        case .mainMovie(let title, let imageURL):
+            return configureMainMovieCell(title: title, imageURL: imageURL, indexPath: indexPath)
+        case .similarMovie(let title, let imageURL, let releaseYear, let genres):
+            return configureSimilarMovieCell(title: title, imageURL: imageURL, releaseYear: releaseYear, genres: genres, indexPath: indexPath)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch viewModel.dataSource.value[indexPath.row] {
+            
+        case .mainMovie:
+            return 300
+        case .similarMovie:
+            return 120
         }
     }
 }
 
 extension MovieDetailViewController {
-    func configureMainMovieCell(title: String, indexPath: IndexPath) -> UITableViewCell {
+    func configureMainMovieCell(title: String, imageURL: URL?, indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueResuableCell(type: MainMovieCell.self, indexPath: indexPath)
         cell.title = title
-        
+        cell.imageURL = imageURL
+        return cell
+    }
+    
+    func configureSimilarMovieCell(title: String, imageURL: URL?, releaseYear: String?, genres: [String], indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueResuableCell(type: SimilarMovieCell.self, indexPath: indexPath)
+        cell.title = title
+        cell.imageURL = imageURL
+        cell.year = releaseYear ?? ""
+        cell.category = genres.joined(separator: ", ")
         return cell
     }
 }

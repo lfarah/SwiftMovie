@@ -15,7 +15,8 @@ struct MovieDetailViewModel {
     let bag = DisposeBag()
     
     enum Section {
-        case mainMovie(title: String)
+        case mainMovie(title: String, imageURL: URL?)
+        case similarMovie(title: String, imageURL: URL?, year: String?, genres: [String])
     }
     
     let dataSource = BehaviorRelay<[Section]>(value: [])
@@ -31,11 +32,12 @@ struct MovieDetailViewModel {
             .filterNotNil()
             .map { info -> [Section] in
                 var sections: [Section] = []
-                let mainMovieSection = Section.mainMovie(title: info.detail.title)
+                let mainMovieSection = Section.mainMovie(title: info.detail.title, imageURL: info.detail.imageURL)
                 sections += [mainMovieSection]
                 
                 sections += info.similarMovies.map({ (movie) -> Section in
-                    return .mainMovie(title: movie.title)
+                    let genres = movie.genreIds?.map { "\($0)"} ?? []
+                    return .similarMovie(title: movie.title, imageURL: movie.imageURL, year: movie.releaseYear, genres: genres)
                 })
                 
                 return sections
