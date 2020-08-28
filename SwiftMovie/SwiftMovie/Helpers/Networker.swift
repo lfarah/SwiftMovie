@@ -13,14 +13,16 @@ import RxSwift
 enum EndpointType {
     case movie(id: String)
     case similarMovies(id: String)
-    
+    case genres
+
     var url: String {
         switch self {
         case .movie(let id):
             return "movie/\(id)"
         case .similarMovies(let id):
             return "movie/\(id)/similar"
-
+        case .genres:
+            return "genre/movie/list"
         }
     }
 }

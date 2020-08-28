@@ -17,4 +17,8 @@ struct MovieRepository {
     func requestSimilarMovies() -> Observable<SimilarMovieList> {
         return Networker.request(endpoint: .similarMovies(id: "373558"), responseType: SimilarMovieList.self)
     }
+    
+    func requestGenres() -> Observable<MovieGenreList> {
+        return Networker.request(endpoint: .genres, responseType: MovieGenreList.self)
+    }
 }

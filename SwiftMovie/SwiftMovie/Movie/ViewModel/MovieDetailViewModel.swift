@@ -19,10 +19,16 @@ struct MovieDetailViewModel {
         case similarMovie(title: String, imageURL: URL?, year: String?, genres: [String])
     }
     
+    struct MovieDetailInfo {
+        let detail: MovieDetail
+        let similarMovies: [MovieDetail]
+        let genreList: [MovieGenre]
+    }
+
     let dataSource = BehaviorRelay<[Section]>(value: [])
     
-    let movieInfo = BehaviorRelay<(detail: MovieDetail, similarMovies: [MovieDetail])?>(value: nil)
-
+    let movieInfo = BehaviorRelay<MovieDetailInfo?>(value: nil)
+    
     init() {
         requestMovieInfo()
             .bind(to: movieInfo)
@@ -39,7 +45,10 @@ struct MovieDetailViewModel {
                 sections += [mainMovieSection]
                 
                 sections += info.similarMovies.map({ (movie) -> Section in
-                    let genres = movie.genreIds?.map { "\($0)"} ?? []
+                    let genres = movie.genreIds?.compactMap({ (genreId) -> String? in
+                        info.genreList.first(where: { $0.id == genreId })?.name
+                    }) ?? []
+                    
                     return .similarMovie(title: movie.title, imageURL: movie.imageURL, year: movie.releaseYear, genres: genres)
                 })
                 
@@ -49,13 +58,14 @@ struct MovieDetailViewModel {
             .disposed(by: bag)
     }
     
-    func requestMovieInfo() -> Observable<(detail: MovieDetail, similarMovies: [MovieDetail])> {
+    func requestMovieInfo() -> Observable<MovieDetailInfo> {
         let detailRequest = repository.requestMovieDetail()
         let similarMoviesRequest = repository.requestSimilarMovies()
+        let movieGenreRequest = repository.requestGenres()
 
-        return Observable.combineLatest(detailRequest, similarMoviesRequest)
-            .map { (requests) -> (detail: MovieDetail, similarMovies: [MovieDetail]) in
-                return (detail: requests.0, similarMovies: requests.1.results)
+        return Observable.combineLatest(detailRequest, similarMoviesRequest, movieGenreRequest)
+            .map { (requests) -> MovieDetailInfo in
+                return MovieDetailInfo(detail: requests.0, similarMovies: requests.1.results, genreList: requests.2.genres)
             }
     }
 }
