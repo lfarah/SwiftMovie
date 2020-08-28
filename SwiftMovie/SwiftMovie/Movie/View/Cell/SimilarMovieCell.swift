@@ -102,7 +102,8 @@ class SimilarMovieCell: UITableViewCell {
     }
 }
 
-extension SimilarMovieCell {
+// MARK: - Setup
+fileprivate extension SimilarMovieCell {
     func layout() {
         backgroundColor = #colorLiteral(red: 0.05098039216, green: 0.05098039216, blue: 0.05098039216, alpha: 1)
         

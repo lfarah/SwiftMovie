@@ -29,9 +29,14 @@ class MovieDetailViewController: UIViewController {
         layout()
         bind()
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+          return .lightContent
+    }
 }
 
-extension MovieDetailViewController {
+// MARK: - Setup
+fileprivate extension MovieDetailViewController {
     func layout() {
         view.backgroundColor = #colorLiteral(red: 0.05098039216, green: 0.05098039216, blue: 0.05098039216, alpha: 1)
         
@@ -57,6 +62,7 @@ extension MovieDetailViewController {
     }
 }
 
+// MARK: - UITableViewDataSource & UITableViewDelegate
 extension MovieDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.dataSource.value.count
@@ -84,6 +90,7 @@ extension MovieDetailViewController: UITableViewDataSource, UITableViewDelegate 
     }
 }
 
+// MARK: - Configure Cell
 extension MovieDetailViewController {
     func configureMainMovieCell(title: String, imageURL: URL?, likesCount: Int, viewsCount: Double, indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueResuableCell(type: MainMovieCell.self, indexPath: indexPath)

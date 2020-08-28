@@ -124,7 +124,8 @@ class MainMovieCell: UITableViewCell {
     }
 }
 
-extension MainMovieCell {
+// MARK: - Setup
+fileprivate extension MainMovieCell {
     func layout() {
         contentView.addSubview(posterImageView)
         contentView.addSubview(backgroundInfoView)
@@ -168,6 +169,7 @@ extension MainMovieCell {
     }
 }
 
+// MARK: - External Methods
 extension MainMovieCell {
     func registerButtonEvent(disposable: Disposable) {
         buttonEventDisposable?.dispose()

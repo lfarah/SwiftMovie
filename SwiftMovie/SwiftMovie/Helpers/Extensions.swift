@@ -11,8 +11,8 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+// MARK: - Rx
 // https://gist.github.com/alskipp/e71f014c8f8a9aa12b8d8f8053b67d72
-
 public protocol OptionalType {
     associatedtype Wrapped
     
@@ -43,6 +43,7 @@ extension BehaviorRelay where Element: OptionalType {
     }
 }
 
+// MARK: - Tableview
 public protocol ReusableView: class { }
 
 extension UITableViewCell {
@@ -52,10 +53,12 @@ extension UITableViewCell {
 }
 
 extension UITableView {
+    /// Registers cell for tableview using a Type
     public func register<T: UITableViewCell>(cellClass: T.Type) {
         register(cellClass, forCellReuseIdentifier: T.reuseIdentifier)
     }
         
+    /// Dequeue cell for tableview using a Type
     public func dequeueResuableCell<T: UITableViewCell>(type: T.Type, indexPath: IndexPath) -> T {
         guard let cell = dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
             fatalError(" Could not dequeue cell with identifier: \(T.reuseIdentifier)")

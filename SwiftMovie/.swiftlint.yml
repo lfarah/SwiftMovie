@@ -2,3 +2,23 @@ disabled_rules: # rule identifiers turned on by default to exclude from running
   - trailing_whitespace
   - identifier_name
   - line_length
+
+custom_rules:
+  api_outside_repository: # rule identifier
+    included: "SwiftMovie/.*\\.swift" # regex that defines paths to include during linting optional.
+    excluded: "(.*Repository\\.swift)||(Networker.swift)" # regex that defines paths to exclude during linting. optional
+    name: "Networker Outside Repository" # rule name. optional.
+    regex: 'Networker'
+    capture_group: 0
+    message: "Only Repository can use Networker"
+    severity: warning
+    
+  alamofire_outside_networker: # rule identifier
+      included: "SwiftMovie/.*\\.swift" # regex that defines paths to include during linting optional.
+      excluded: "(Networker.swift)" # regex that defines paths to exclude during linting. optional
+      name: "Alamofire Outside Networker" # rule name. optional.
+      regex: 'import Alamofire'
+      capture_group: 0
+      message: "Only Networker can use Alamofire"
+      severity: warning
+
